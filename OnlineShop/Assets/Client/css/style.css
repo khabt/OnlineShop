@@ -30,7 +30,7 @@ img{max-width:100%;}
 /*end reset*/
 @font-face {
     font-family: 'ambleregular';
-    src:url(../font/Amble-Regular-webfont.ttf) format('truetype');
+    src:url(../fonts/Amble-Regular-webfont.ttf) format('truetype');
 }
 body {
 	font-family: Arial, Helvetica, sans-serif;
@@ -102,10 +102,10 @@ body {
 	color:#303030;
 	display:inline-block;
 }
-.cart p span{
+/*.cart p span{
 	font-size:1.5em;
 	color:#E4292F;
-}
+}*/
 .wrapper-dropdown-2 {
     display:inline-block;
     margin: 0 auto;

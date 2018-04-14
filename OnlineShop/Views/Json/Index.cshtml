@@ -1,0 +1,104 @@
+﻿@model OnlineShop.Models.PostDataModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<div>
+    <h4>PostDataModelcs</h4>
+    <hr />
+    @using (@Html.BeginForm("Index", "Json", FormMethod.Post))
+    {
+        @*<dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.QuoteISN)
+            </dt>
+
+            <dd>
+                @Html.TextBoxFor(model => model.QuoteISN)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StaffISN)
+            </dt>
+
+            <dd>
+                @Html.TextBoxFor(model => model.StaffISN)
+            </dd>
+
+        </dl>*@
+        <dl class="dl-horizontal">
+            <dt>
+                QuoteISN
+            </dt>
+
+            <dd>
+                <input id="QuoteISN" name="QuoteISN" type="text" value="">
+            </dd>
+
+            <dt>
+                StaffISN
+            </dt>
+
+            <dd>
+                <input id="StaffISN" name="StaffISN" type="text" value="">
+            </dd>
+
+        </dl>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Post" class="btn btn-default" />
+            </div>
+        </div>    
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Test" class="btn btn-default" id="btnSubmit" />
+        </div>
+    </div>  
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<script>
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            var QuoteISN = $("#QuoteISN").val();
+            var StaffISN = $("#StaffISN").val();           
+            var data = new FormData();
+            data.append("QuoteISN", QuoteISN);
+            data.append("StaffISN", StaffISN);
+
+            var formData = 'QuoteISN: "' + QuoteISN + '", StaffISN: "' + StaffISN + '"';
+
+            var dataJson = {};
+            dataJson.QuoteISN = QuoteISN;
+            dataJson.StaffISN = StaffISN;
+
+            $.ajax({
+                url: "http://localhost/HE_SolarWS/api/solar/CreateProposal",
+                type: "POST",
+                data: $("form").serialize(),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) { alert("arror"); }
+            })
+            
+
+            //$.post("http://localhost/HE_SolarWS/api/solar/CreateProposal", dataJson, function (data) {
+            //    var json = JSON.stringify(data);
+            //    alert(json);
+            //});
+        })
+    });
+</script>

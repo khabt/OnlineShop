@@ -1,8 +1,93 @@
-﻿
+﻿@model Model.EF.Contact
 @{
     ViewBag.Title = "Liên hệ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section jsFooter{
 
-<h2>Liên hệ</h2>
+    @*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9MkKvyFyfXoYuFlet-Z4RXfMJF177Jn4&v=3.exp&libraries=places"></script>*@
+    <script src="~/Assets/Client/js/controller/contactController.js"></script>
+}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9MkKvyFyfXoYuFlet-Z4RXfMJF177Jn4&v=3.exp&libraries=places"></script>
 
+<style>
+    #mapCanvas {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <h2>Thông tin liên hệ</h2>
+                @Html.Raw(Model.Content)
+                <br />
+                <h2>Gửi thông tin</h2>
+                <form id="form_contact">
+                    <div class="form-group">
+                        <label>Họ tên <span class="text-danger">*</span></label>
+                        <input type="text" id="txtName" class="form-control" name="txtName" />
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại <span class="text-danger">*</span></label>
+                        <input type="text" id="txtMobile" class="form-control"  name="txtMobile"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Email <span class="text-danger">*</span></label>
+                        <input type="text" id="txtEmail" class="form-control"  name="txtEmail"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ <span class="text-danger">*</span></label>
+                        <input type="text" id="txtAddress" class="form-control" name="txtAddress"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Yêu cầu <span class="text-danger">*</span></label>
+                        <textarea id="txtContent" class="form-control" name="txtContent"></textarea>
+                    </div>
+                    <button type="submit" id="btnSend" class="btn btn-success" name="btnSend">Gửi</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h2>Bản đồ</h2>
+                <div class="map" id="mapCanvas"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" />  *@ 
+<script src="~/Assets/Client/js/validate/app.validator.js"></script>
+<script>
+
+    // This example displays a marker at the center of Australia.
+    // When the user clicks the marker, an info window opens.
+
+    function initMap() {
+        var uluru = { lat: 10.8098532, lng: 106.60590320000006 };
+        var map = new google.maps.Map(document.getElementById('mapCanvas'), {
+            zoom: 18,
+            center: uluru,
+            mapTypeId: google.maps.MapTypeId.HYBRID
+        });
+
+        var contentString = '@Html.Raw(Model.Content)';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map,
+            title: 'Uluru (Ayers Rock)'
+        });
+
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
+
+    }
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+</script>

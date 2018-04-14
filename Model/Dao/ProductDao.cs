@@ -1,4 +1,5 @@
 ﻿using Model.EF;
+using Model.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,27 @@ namespace Model.Dao
         /// </summary>
         /// <param name="categoryId"></param>
         /// <returns></returns>
-        public List<Product> ListByCategoryId(long categoryId)
+        public List<ProductViewModel> ListByCategoryId(long categoryId)
         {
-            return db.Products.Where(x => x.CategoryID == categoryId).ToList();
+            int totalRecord = db.Products.Where(x => x.CategoryID == categoryId).Count();
+            var model = from a in db.Products
+                        join b in db.ProductCategories
+                        on a.CategoryID equals b.ID
+                        where a.CategoryID == categoryId
+                        select new ProductViewModel
+                        {
+                            CateMetaTitle = b.MetaTitle,
+                            CateName = b.Name,
+                            CreatedDate = a.CreatedDate,
+                            ID = a.ID,
+                            Images = a.Image,
+                            Name = a.Name,
+                            MetaTitle = a.MetaTitle,
+                            Price = a.Price,
+                            PromotionPrice = a.PromotionPrice                            
+                        };
+
+            return model.ToList();
         }
 
         public List<Product> ListFeatureProduct(int top)

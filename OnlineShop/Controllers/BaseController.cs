@@ -8,10 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace OnlineShop.Areas.Admin.Controllers
+namespace OnlineShop.Controllers
 {
     public class BaseController : Controller
     {
+        // GET: Base
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
@@ -32,8 +33,6 @@ namespace OnlineShop.Areas.Admin.Controllers
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(ddlCulture);
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(ddlCulture);
-
-
             Session[CommonConstants.CurrentCulture] = ddlCulture;
             return Redirect(returnUrl);
         }

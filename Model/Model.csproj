@@ -154,6 +154,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StaticResources\StaticResources.csproj">
+      <Project>{bcf4f067-a693-4407-a0d5-79411e5e9ed0}</Project>
+      <Name>StaticResources</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

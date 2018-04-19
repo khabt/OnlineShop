@@ -18,9 +18,9 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressSSLPort>44322</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,6 +48,14 @@
     <Reference Include="AWSSDK, Version=2.3.55.0, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assets\Client\AWSSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="BotDetect, Version=4.3.0.0, Culture=neutral, PublicKeyToken=74616036388b765f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Captcha.4.3.0\lib\net45\BotDetect.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="BotDetect.Web.Mvc, Version=4.3.0.0, Culture=neutral, PublicKeyToken=74616036388b765f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Captcha.4.3.0\lib\net45\BotDetect.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CKFinder, Version=2.6.0.2792, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -67,6 +76,10 @@
     <Reference Include="Dropbox.Api, Version=0.1.5960.22395, Culture=neutral, PublicKeyToken=310f0e82fbb45d01, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Assets\Admin\plugins\ckfinder\bin\Dropbox.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.10-beta\lib\net45\Facebook.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ImageProcessor, Version=2.3.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -306,18 +319,29 @@
     <Compile Include="Common\MergeData.cs" />
     <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Controllers\AboutController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JsonController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\DistrictModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PostDataModel.cs" />
+    <Compile Include="Models\ProvinceModel.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\ResponseVal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Admin\data\flot-data.js" />
@@ -1455,6 +1479,7 @@
     <Content Include="Assets\Admin\vendor\morrisjs\morris.min.js" />
     <Content Include="Assets\Admin\vendor\raphael\raphael.js" />
     <Content Include="Assets\Admin\vendor\raphael\raphael.min.js" />
+    <Content Include="Assets\Client\css\bootstrap-social.css" />
     <Content Include="Assets\Client\css\bootstrap-theme.css" />
     <Content Include="Assets\Client\css\bootstrap-theme.min.css" />
     <Content Include="Assets\Client\css\bootstrap.css" />
@@ -1463,6 +1488,7 @@
     <Content Include="Assets\Client\css\global.css" />
     <Content Include="Assets\Client\css\slider.css" />
     <Content Include="Assets\Client\css\style.css" />
+    <Content Include="Assets\Client\data\Provinces_Data.xml" />
     <Content Include="Assets\Client\font\glyphicons-halflings-regular.svg" />
     <Content Include="Assets\Client\images\about_img.jpg" />
     <Content Include="Assets\Client\images\arrow-next.png" />
@@ -1517,6 +1543,7 @@
     <Content Include="Assets\Client\js\bootstrap.js" />
     <Content Include="Assets\Client\js\controller\cartController.js" />
     <Content Include="Assets\Client\js\controller\contactController.js" />
+    <Content Include="Assets\Client\js\controller\userController.js" />
     <Content Include="Assets\Client\js\easing.js" />
     <Content Include="Assets\Client\js\easyResponsiveTabs.js" />
     <Content Include="Assets\Client\js\jquery-1.7.2.min.js" />
@@ -1759,6 +1786,10 @@
     <Content Include="bin\roslyn\Microsoft.CSharp.Core.targets" />
     <Content Include="bin\roslyn\Microsoft.VisualBasic.Core.targets" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\bootstrap.validate.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -1798,11 +1829,14 @@
     <Content Include="Views\Cart\Payment.cshtml" />
     <Content Include="Views\Cart\Success.cshtml" />
     <Content Include="Views\Cart\Fail.cshtml" />
+    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1820,6 +1854,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{096579F9-3E51-4C95-8962-A188714D9A07}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StaticResources\StaticResources.csproj">
+      <Project>{bcf4f067-a693-4407-a0d5-79411e5e9ed0}</Project>
+      <Name>StaticResources</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -1840,7 +1878,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5092</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:5092/</IISUrl>
+          <IISUrl>https://localhost:44322</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

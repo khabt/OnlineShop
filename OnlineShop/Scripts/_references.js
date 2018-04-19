@@ -352,6 +352,7 @@
 /// <reference path="../assets/client/js/bootstrap.js" />
 /// <reference path="../assets/client/js/controller/cartcontroller.js" />
 /// <reference path="../assets/client/js/controller/contactcontroller.js" />
+/// <reference path="../assets/client/js/controller/usercontroller.js" />
 /// <reference path="../assets/client/js/easing.js" />
 /// <reference path="../assets/client/js/easyresponsivetabs.js" />
 /// <reference path="../assets/client/js/jquery.accordion.js" />

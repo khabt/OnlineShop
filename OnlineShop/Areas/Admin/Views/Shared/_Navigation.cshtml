@@ -10,6 +10,16 @@
     </div>
     <!-- /.navbar-header -->
     <ul class="nav navbar-top-links navbar-right">
+        <li>
+            @using (Html.BeginForm("ChangeCulture", "Base"))
+            {
+                @Html.Hidden("returnUrl", Request.RawUrl)
+                @Html.DropDownList("ddlCulture", new SelectList(new[] {
+                new { value="vi", text= StaticResources.Resources.Vietnamese},
+                new { value="en", text= StaticResources.Resources.English},
+                }, "value", "text", Session[OnlineShop.Common.CommonConstants.CurrentCulture]), new { onchange = "this.form.submit();"})
+            }
+        </li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -236,46 +246,46 @@
                     <!-- /input-group -->
                 </li>
                 <li>
-                    <a href="/Admin/Home/Index"><i class="fa fa-dashboard fa-fw"></i> Trang chủ</a>
+                    <a href="/Admin/Home/Index"><i class="fa fa-dashboard fa-fw"></i>@StaticResources.Resources.Menu_Home</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-user fa-fw"></i>Hệ thống<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-user fa-fw"></i>@StaticResources.Resources.Menu_System<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="/Admin/UserGroup/Index">Nhóm người dùng</a>
+                            <a href="/Admin/UserGroup/Index">@StaticResources.Resources.Menu_UserGroup</a>
                         </li>
                         <li>
-                            <a href="/Admin/User/Index">Người dùng</a>
+                            <a href="/Admin/User/Index">@StaticResources.Resources.Menu_User</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-comment fa-fw"></i>Tin tức<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-comment fa-fw"></i>@StaticResources.Resources.Menu_Newspaper<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="/Admin/Category/Index">Danh mục</a>
+                            <a href="/Admin/Category/Index">@StaticResources.Resources.Menu_Category</a>
                         </li>
                         <li>
-                            <a href="/Admin/Content/Index">Tin tức</a>
+                            <a href="/Admin/Content/Index">@StaticResources.Resources.Menu_Newspaper</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>Sản phẩm<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>@StaticResources.Resources.Menu_Product<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="/Admin/ProductCategory/Index">Danh mục</a>
+                            <a href="/Admin/ProductCategory/Index">@StaticResources.Resources.Menu_Category</a>
                         </li>
                         <li>
-                            <a href="/Admin/ProductCategory/Index">Tin tức</a>
+                            <a href="/Admin/ProductCategory/Index">@StaticResources.Resources.Menu_Newspaper</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-gear fa-fw"></i>Quản lý chung<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-gear fa-fw"></i>@StaticResources.Resources.Menu_GeneralManagement<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="/Admin/Category/Index">Giới thiệu</a>

@@ -10,7 +10,30 @@
                 user.loadDistrict(parseInt(id));
             }
             else {
-                $('#ddDistrict').html('');
+                $('#ddlDistrict').html('');                
+            }
+            $('#ddlWard').html('');
+            $('#Address').val('');
+        });
+
+        $('#ddlDistrict').off('change').on('change', function () {
+            var id = $(this).val();
+            if (id != '') {
+                user.loadWard(parseInt(id));
+            }
+            else {
+                $('#ddlWard').html('');                
+            }
+            $('#Address').val('');
+        });
+
+        $('#ddlWard').off('change').on('change', function () {
+            var id = $(this).val();
+            if (id != '') {
+                user.getAddress();
+            }
+            else {
+                $('#Address').val('');
             }
         });
     },
@@ -24,7 +47,10 @@
                     var html = '<option value="">---Chọn tỉnh/thành--</option>';
                     var data = response.data;
                     $.each(data, function (i, item) {
-                        html += '<option value="' + item.ID + '">' + item.Name + '</option>';
+                        //html += '<option value="' + item.ID + '">' + `${i + 1}.` + item.Name + '</option>';
+                        i = i + 1;
+                        var order = i.toString().length == 1 ? '0' + i : i;
+                        html += `<option value='${item.ID}'>${i+1}. ${item.Name}</option>`
                     });
                     $('#ddlProvince').html(html);
                 }
@@ -48,6 +74,26 @@
                 }
             }
         });
+    },
+    loadWard: function (id) {
+        $.ajax({
+            url: '/User/LoadWard',
+            type: 'POST',
+            dataType: 'json',
+            data: { districtID: id },
+            success: function (response) {
+                var html = '<option value="">--Chọn xã/phường--</option>';
+                var data = response.data;
+                $.each(data, function (i, item) {
+                    html += '<option value="' + item.ID + '">' + item.Name + '</option>';
+                });
+                $('#ddlWard').html(html);
+            }
+        });
+    },
+    getAddress: function () {
+        var address = $('#ddlWard option:selected').text() + ', ' + $('#ddlDistrict option:selected').text() + ', ' + $('#ddlProvince option:selected').text();
+        $('#Address').val(address);
     }
 }
 user.init();

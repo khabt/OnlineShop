@@ -79,6 +79,10 @@ namespace OnlineShop.Controllers
                         {
                             user.DistrictID = int.Parse(model.DistricID);
                         }
+                        if (!string.IsNullOrEmpty(model.WardID))
+                        {
+                            user.WardID = int.Parse(model.WardID);
+                        }
                         var result = dao.Insert(user);
                         if (result > 0)
                         {
@@ -206,6 +210,30 @@ namespace OnlineShop.Controllers
                 district.ProvinceID = int.Parse(xElement.Attribute("id").Value);
                 list.Add(district);
             }
+            return Json(new
+            {
+                data = list,
+                status = true
+            });
+        }
+
+        public JsonResult LoadWard(int districtID)
+        {
+            var xmlDoc = XDocument.Load(Server.MapPath(@"~/Assets/Client/data/Provinces_Data.xml"));
+            var xElement = xmlDoc.Element("Root").Elements("Item").Elements("Item")
+                .Single(x => x.Attribute("type").Value == "district" && int.Parse(x.Attribute("id").Value) == districtID);
+
+            var list = new List<WardModel>();
+            WardModel ward = null;
+            foreach (var item in xElement.Elements("Item").Where(x=>x.Attribute("type").Value == "precinct"))
+            {
+                ward = new WardModel();
+                ward.ID = int.Parse(item.Attribute("id").Value);
+                ward.Name = item.Attribute("value").Value;
+                ward.DistrictID = int.Parse(xElement.Attribute("id").Value);
+                list.Add(ward);
+            }
+
             return Json(new
             {
                 data = list,

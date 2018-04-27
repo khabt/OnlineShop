@@ -1,5 +1,6 @@
 ﻿using Model.Dao;
 using Model.EF;
+using OnlineShop.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace OnlineShop.Controllers
         // GET: Contact
         public ActionResult Index()
         {
+            var encrypt = Encryptor.Encrypt("niemvui2017");
+            var decrypt = Encryptor.Decrypt(encrypt);
             var model = new ContactDao().GetActiveContact();
             return View(model);
         }
@@ -20,6 +23,13 @@ namespace OnlineShop.Controllers
         [HttpPost]
         public JsonResult Send(string name, string mobile, string email, string address, string content)
         {
+            if(name =="" || mobile == "" || email == "" || address =="" || content == "")
+            {
+                return Json(new
+                {
+                    status = false
+                });
+            }
             var feedback = new Feedback();
             feedback.Name = name;
             feedback.Email = email;

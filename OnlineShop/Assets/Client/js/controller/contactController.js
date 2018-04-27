@@ -22,15 +22,16 @@
                     content: content
                 },
                 success: function (res) {
-                    if (res.status == true) {
-                        window.alert("Gửi thành công");
+                    if (res.status) {   
+                        console.log("Register True.")
                         contact.resetForm();
+
                     }
+                    else
+                        console.log("Register Fail.")
                 }
             });
         });
-
-
     },
     resetForm: function () {
         $('#txtName').val('');

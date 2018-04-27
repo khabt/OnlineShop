@@ -58,9 +58,7 @@
                 type: 'POST',
                 success: function (response) {
                     if (response.status == true)
-                    {
                         window.location.href = '/gio-hang';
-                    }
                     else {
 
                     }
@@ -73,5 +71,4 @@
         });
     }
 }
-
 cart.init();

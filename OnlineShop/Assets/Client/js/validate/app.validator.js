@@ -75,6 +75,7 @@
     }
 
     var formContact = {
+        excluded: [':disabled', ':hidden', ':not(:visible)'],
         feedbackIcons: feedbackIcons,
         fields: {
             txtName: nameContact,

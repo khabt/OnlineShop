@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Model.Dao;
+using System.Web.UI;
 
 namespace OnlineShop.Controllers
 {
@@ -30,12 +31,30 @@ namespace OnlineShop.Controllers
             return View(model);
         }
 
+        public ActionResult Search(string keyword)
+        {
+            ViewBag.Keyword = keyword;
+            var model = new ProductDao().Search(keyword);
+            return View(model);
+        }
+
+        [OutputCache(CacheProfile = "Cache1DayByProduct")]
         public ActionResult Detail(long id)
         {
             var product = new ProductDao().ViewDetail(id);
             ViewBag.Category = new ProductCategoryDao().ViewDetail(product.CategoryID.Value);
             ViewBag.RelatedProducts = new ProductDao().ListRelatedProducts(id);
             return View(product);
+        }
+
+        public JsonResult ListName(string p)
+        {
+            var data = new ProductDao().ListName(p);
+            return Json(new
+            {
+                data = data,
+                status = true
+            },JsonRequestBehavior.AllowGet);
         }
     }
 }

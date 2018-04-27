@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Model.EF;
 using PagedList;
+using Common;
+
 namespace Model.Dao
 {
 
@@ -66,18 +68,36 @@ namespace Model.Dao
             return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page, pageSize);
         }
 
-        public int Login(string userName, string passWord)
+        public int Login(string userName, string passWord, bool isLoginAdmin = false)
         {
             var result = db.Users.SingleOrDefault(x => x.UserName == userName);
             if (result == null) return 0;
             else
             {
-                if (result.Status == false) return -1;
+                if (isLoginAdmin)
+                {
+                    if ((result.GroupID == CommonCredential.ADMIN_GROUP || result.GroupID == CommonCredential.MOD_GROUP))
+                    {
+                        if (result.Status == false) return -1;
+                        else
+                        {
+                            if (result.Password == passWord)
+                                return 1;
+                            else return -2;
+                        }
+                    }
+                    else return -3;
+
+                }
                 else
                 {
-                    if (result.Password == passWord)
-                        return 1;
-                    else return -2;
+                    if (result.Status == false) return -1;
+                    else
+                    {
+                        if (result.Password == passWord)
+                            return 1;
+                        else return -2;
+                    }
                 }
             }
         }
@@ -114,6 +134,26 @@ namespace Model.Dao
         public bool CheckEmail(string email)
         {
             return db.Users.Count(x => x.Email == email) > 0;
+        }
+
+        public List<string> GetListCredential(string userName)
+        {
+            var user = db.Users.Single(x => x.UserName == userName);
+            var data = (from a in db.Credentials
+                       join b in db.UserGroups on a.UserGroupID equals b.ID
+                       join c in db.Roles on a.RoleID equals c.ID
+                       where b.ID == user.GroupID
+                       select new
+                       {
+                           RoleID = a.RoleID,
+                           UserGroupID = a.UserGroupID
+                       }).AsEnumerable().Select(x=> new Credential()
+                       {
+                           RoleID = x.RoleID,
+                           UserGroupID = x.UserGroupID
+                       });
+
+            return data.Select(x => x.RoleID).ToList();
         }
     }
 }

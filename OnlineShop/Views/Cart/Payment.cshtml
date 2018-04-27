@@ -17,7 +17,7 @@
                         <td>Số lượng</td>
                         <td>Đơn giá</td>
                         <td>Thành tiền</td>
-                        <td></td>
+                        @*<td></td>*@
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,7 @@
                             <td><input type="text" class="txtQuatity" data-id="@item.Product.ID" value="@item.Quatity" /></td>
                             <td>@item.Product.Price.GetValueOrDefault(0).ToString("N0")</td>
                             <td>@((item.Product.Price.GetValueOrDefault(0) * item.Quatity).ToString("N0"))đ</td>
-                            <td><a href="#" class="btn-delete" data-id="@item.Product.ID"><span class="glyphicon glyphicon-trash"></span></a></td>
+                            @*<td><a href="#" class="btn-delete" data-id="@item.Product.ID"><span class="glyphicon glyphicon-trash"></span></a></td>*@
                         </tr>
                     }
                 </tbody>

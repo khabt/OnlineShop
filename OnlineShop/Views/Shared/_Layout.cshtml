@@ -7,35 +7,36 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>online</title>
+    <title>@ViewBag.Title</title>
+    <meta name="keywords" content="@ViewBag.Keywords"/>
+    <meta name="description" content="@ViewBag.Descriptions" />
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="/Assets/Client/css/style.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="/Assets/Client/css/slider.css" rel="stylesheet" type="text/css" media="all" />
-    
-    <script src="/Assets/Client/js/jquery-3.3.1.min.js"></script>    
-    <script src="/Scripts/jquery.validate.min.js"></script>    
-    <script src="/Assets/Client/js/bootstrap.js"></script>
-    <link href="/Assets/Client/css/bootstrap.css" rel="stylesheet" /> 
-    <link href="/Assets/Client/css/bootstrap-social.css" rel="stylesheet" />
-    @*<link href="https://raw.githubusercontent.com/lipis/bootstrap-social/gh-pages/bootstrap-social.css" rel="stylesheet" />*@ 
-
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
-         
-    <!---- AnyOther custom stylesheets ---->
-    @*<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.js"></script>*@
-    @*<script src="~/Scripts/jquery.validate.min.js"></script>  
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" />
-    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.js"></script>*@
-    @*<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>*@
-    @*<link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css" />*@
     
     
+    @*<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>*@
+    @*<script src="~/Assets/Client/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Assets/Client/js/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Assets/Client/js/bootstrap.js"></script>
+    <script src="~/Assets/Client/js/bootstrapValidator.min.js"></script>
     <script src="~/Assets/Client/js/easyResponsiveTabs.js"></script>
-    <script type="text/javascript" src="/Assets/Client/js/move-top.js"></script>
-    <script type="text/javascript" src="/Assets/Client/js/easing.js"></script>
-    <script type="text/javascript" src="/Assets/Client/js/startstop-slider.js"></script>
+    <script type="text/javascript" src="~/Assets/Client/js/move-top.js"></script>
+    <script type="text/javascript" src="~/Assets/Client/js/easing.js"></script>
+    <script type="text/javascript" src="~/Assets/Client/js/startstop-slider.js"></script>*@
+
+
+    @Scripts.Render("~/bundler/jsbase");
+    @Styles.Render("~/bundler/csscore");    
+
+
+    @*<link href="~/Assets/Client/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Assets/Client/css/slider.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Assets/Client/css/bootstrap.css" rel="stylesheet" /> 
+    <link href="~/Assets/Client/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Assets/Client/css/bootstrap-social.css" rel="stylesheet" />*@    
+
 </head>
 <body>
     <div class="wrap">
@@ -81,8 +82,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="header_bottom">
                 @{Html.RenderAction("MainMenu", "Home");}
                 <div class="search_box">
-                    <form>
-                        <input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
+                    <form action="/tim-kiem" method="get">
+                        <input type="text" placeholder="Gõ sản phẩm" name="keyword" id="txtKeyword"><input type="submit" value="">
                     </form>
                 </div>
                 <div class="clear"></div>
@@ -103,6 +104,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         });
     </script>
     <a href="#" id="toTop"><span id="toTopHover"> </span></a>
+    @*<script src="~/Assets/Client/js/controller/baseController.js"></script>*@
+    @Scripts.Render("~/bundler/jscontroller");    
     @RenderSection("jsFooter", required: false)
 </body>
 </html>

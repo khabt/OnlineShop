@@ -3,33 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
+using System.Threading.Tasks;
 
-namespace OnlineShop.Common
+namespace Common
 {
-    public static class Encryptor
+    public class Encryptor
     {
-        public static string MD5Hash(string text)
-        {
-            MD5 md5 = new MD5CryptoServiceProvider();
-
-            //compute hash from the bytes of text
-            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
-
-            //get hash result after compute it
-            byte[] result = md5.Hash;
-
-            StringBuilder strBuilder = new StringBuilder();
-            for (int i = 0; i < result.Length; i++)
-            {
-                //change it into 2 hexadecimal digits
-                //for each byte
-                strBuilder.Append(result[i].ToString("x2"));
-            }
-
-            return strBuilder.ToString();
-        }
-
         public static string Encrypt(string data)
         {
             using (var des = new TripleDESCryptoServiceProvider { Mode = CipherMode.ECB, Key = GetKey("a1!B78s!5(j$S1c%"), Padding = PaddingMode.PKCS7 })
@@ -38,7 +17,7 @@ namespace OnlineShop.Common
                 var buffer = Encoding.UTF8.GetBytes(data);
 
                 return Convert.ToBase64String(desEncrypt.TransformFinalBlock(buffer, 0, buffer.Length));
-            }                
+            }
 
         }
 
@@ -62,6 +41,5 @@ namespace OnlineShop.Common
 
             return Encoding.UTF8.GetBytes(pwd);
         }
-        
     }
 }

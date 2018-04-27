@@ -2,6 +2,8 @@
 @{
     var category = (Model.EF.ProductCategory)ViewBag.Category;
     ViewBag.Title = category.Name;
+    ViewBag.Keywords = category.MetaKeywords;
+    ViewBag.Descriptions = category.MetaDescriptions;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 

@@ -1,6 +1,8 @@
 ﻿@model Model.EF.Product
 @{
-    ViewBag.Title = "Detail";
+    ViewBag.Title = Model.Name;
+    ViewBag.Keywords = Model.MetaKeywords;
+    ViewBag.Descriptions = Model.MetaDescriptions;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var category = (Model.EF.ProductCategory)ViewBag.Category;
     var relatedProducts = (List<Model.EF.Product>)ViewBag.RelatedProducts;
@@ -21,16 +23,16 @@
                         <div id="products_example">
                             <div id="products">
                                 <div class="slides_container">
-                                    <a href="#" target="_blank"><img src="@Model.Image" alt=" " /></a>
+                                    <a href="#" target="_blank"><img src="@Model.Image" alt="@Model.Name" /></a>
                                 </div>
-                                <ul class="pagination">
+                                @*<ul class="pagination">
                                     <li><a href="#"><img src="/Assets/Client/images/thumbnailslide-1.jpg" alt=" " /></a></li>
                                     <li><a href="#"><img src="/Assets/Client/images/thumbnailslide-2.jpg" alt=" " /></a></li>
                                     <li><a href="#"><img src="/Assets/Client/images/thumbnailslide-3.jpg" alt=" " /></a></li>
                                     <li><a href="#"><img src="/Assets/Client/images/thumbnailslide-4.jpg" alt=" " /></a></li>
                                     <li><a href="#"><img src="/Assets/Client/images/thumbnailslide-5.jpg" alt=" " /></a></li>
                                     <li><a href="#"><img src="/Assets/Client/images/thumbnailslide-6.jpg" alt=" " /></a></li>
-                                </ul>
+                                </ul>*@
                             </div>
                         </div>
                     </div>

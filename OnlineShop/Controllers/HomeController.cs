@@ -3,9 +3,11 @@ using OnlineShop.Common;
 using OnlineShop.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace OnlineShop.Controllers
 {
@@ -18,11 +20,17 @@ namespace OnlineShop.Controllers
             var productDao = new ProductDao();
             ViewBag.NewProducts = productDao.ListNewProduct(4);
             ViewBag.ListFeatureProducts = productDao.ListFeatureProduct(4);
+
+            ViewBag.Title = ConfigurationManager.AppSettings["HomeTitle"];
+            ViewBag.Keywords = ConfigurationManager.AppSettings["HomeKeywords"];
+            ViewBag.Descriptions = ConfigurationManager.AppSettings["HomeDescriptions"];
+
             return View();
         }
 
 
         [ChildActionOnly]
+        [OutputCache(Duration = 3600)]
         public ActionResult MainMenu()
         {
             var model = new MenuDao().ListByGroupId(1);
@@ -30,6 +38,7 @@ namespace OnlineShop.Controllers
         }
 
         [ChildActionOnly]
+        [OutputCache(Duration = 3600)]
         public ActionResult TopMenu()
         {
             var model = new MenuDao().ListByGroupId(2);
@@ -50,6 +59,7 @@ namespace OnlineShop.Controllers
         }
 
         [ChildActionOnly]
+        [OutputCache(Duration = 3600)]
         public ActionResult Footer()
         {
             var model = new FooterDao().GetFooter();

@@ -11,25 +11,16 @@ namespace OnlineShop
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
-
-            //routes Admin
-            // routes.MapRoute(
-            //    name: "Login Fail",
-            //    url: "fail",
-            //    defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional },
-            //    namespaces: new[] { "OnlineShop.Areas.Admin.Controllers" }
-            //);
-
-            // routes.MapRoute(
-            //     name: "Admin Login",
-            //     url: "login",
-            //     defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional },
-            //     namespaces: new[] { "OnlineShop.Areas.Admin.Controllers" }
-            // );
-
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{*botdetect}",
                 new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
+
+            routes.MapRoute(
+                name: "Search",
+                url: "tim-kiem",
+                defaults: new { controller = "Product", action = "Search", id = UrlParameter.Optional },
+                namespaces: new[] { "OnlineShop.Controllers" }
+            );
 
             routes.MapRoute(
                 name: "Login",
@@ -106,7 +97,7 @@ namespace OnlineShop
                 defaults: new { controller = "Product", action = "Category", id = UrlParameter.Optional },
                 namespaces: new[] { "OnlineShop.Controllers" }
             );
-           
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
@@ -114,20 +105,13 @@ namespace OnlineShop
                 namespaces: new[] { "OnlineShop.Controllers" }
             );
 
-
-            routes.MapRoute(
-               name: "Admin Home",
-               url: "trang-chu",
-               defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-               namespaces: new[] { "OnlineShop.Areas.Admin.Controllers" }
-           );
-
-            routes.MapRoute(
-               name: "Admin",
-               url: "{controller}/{action}/{id}",
-               defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-               namespaces: new[] { "OnlineShop.Areas.Admin.Controllers" }
-           );
+            //routes.MapRoute(
+            //    "Default", // Route name
+            //    "{controller}/{action}/{id}", // URL with parameters
+            //    new { area = "Admin", controller = "Home", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
+            //    null,
+            //    new[] { "OnlineShop.Areas.Admin.Controllers" }
+            //).DataTokens.Add("area", "Admin");
 
         }
     }

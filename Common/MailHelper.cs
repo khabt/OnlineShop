@@ -17,7 +17,7 @@ namespace Common
             fromEmailAddress = "ditimniemvui2017@gmail.com";
             var fromEmailDisplayName = ConfigurationManager.ConnectionStrings["FromEmailDisplayName"].ToString();
             var fromEmailPassword = ConfigurationManager.ConnectionStrings["FromEmailPassword"].ToString();
-            fromEmailPassword = "niemvui2017";
+            fromEmailPassword = Encryptor.Decrypt("tRsdhd8q0Rwx2uKSMlN2DA==");
             var smtpHost = ConfigurationManager.ConnectionStrings["SMTPHost"].ToString();
             var smtpPort = ConfigurationManager.ConnectionStrings["SMTPPort"].ToString();
 

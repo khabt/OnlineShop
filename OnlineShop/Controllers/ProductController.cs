@@ -56,6 +56,15 @@ namespace OnlineShop.Controllers
                 status = true
             },JsonRequestBehavior.AllowGet);
         }
+        public JsonResult ListNameDevelop(string p)
+        {
+            var data = new ProductDao().ListName(p);
+            return Json(new
+            {
+                data = data,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult ListNameMegre(string p)
         {
             var data = new ProductDao().ListName(p);
